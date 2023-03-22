@@ -1,0 +1,19 @@
+<div class="container">
+  <form class="form-container" (submit)="onSubmit()">
+    <label>
+      Email:
+      <input class="form-input" type="email" [(ngModel)]="email" name="email" required>
+    </label>
+    <label class="form-file">
+      Upload DOCX file:
+      <input class="file-input" type="file" (change)="onFileSelected($event)" accept=".docx" required>
+      <span class="file-label">Choose file</span>
+      <br><br>
+      <span *ngIf="file" class="file-name">{{ file.name }}</span>
+    </label>
+    <br><br>
+    <button class="form-button" type="submit" [disabled]="!email || !file">Send</button>
+  </form>
+</div>
+
+

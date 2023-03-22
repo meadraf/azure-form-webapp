@@ -15,12 +15,12 @@ public class UploadController : ControllerBase
     }
     
     [HttpPost("upload")]
-    public async Task<IActionResult> UploadFile(IFormFile file, string? email)
+    public async Task<IActionResult> UploadFile(IFormFile file, string email)
     {
         if (!file.FileName.EndsWith(".docx"))
              return BadRequest("File is not .docx");
 
-        await _blobService.UploadFileBlobAsync(file);
+        await _blobService.UploadFileBlobAsync(file, email);
         return Ok();
     }
 }

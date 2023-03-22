@@ -1,20 +1,15 @@
-﻿using Azure.Extensions.AspNetCore.Configuration.Secrets;
-using Azure.Identity;
-using Azure.Security.KeyVault.Secrets;
-using Azure.Storage.Blobs;
+﻿using Azure.Storage.Blobs;
 using FileForm.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddControllersWithViews();
 builder.Services.AddSingleton(x =>
     new BlobServiceClient(builder.Configuration.GetValue<string>("BlobStorageConnectionString")));
 builder.Services.AddSwaggerGen();
 builder.Services.AddSingleton<IBlobService, BlobService>();
 builder.Services.AddCors();
-
 
 var app = builder.Build();
 app.UseCors(corsPolicyBuilder => corsPolicyBuilder.AllowAnyOrigin());

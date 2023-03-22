@@ -13,11 +13,16 @@ public class BlobService : IBlobService
         _blobServiceClient = blobServiceClient;
     }
     
-    public async Task UploadFileBlobAsync(IFormFile file)
+    public async Task UploadFileBlobAsync(IFormFile file, string email)
     {
         var containerClient = _blobServiceClient.GetBlobContainerClient("userdocx");
-        var blobClient = containerClient.GetBlobClient(file.FileName);
+        var blobName = DateTime.Now.ToString("yyyyMMddHHmmssfff") + " " + file.FileName;
+        var blobClient = containerClient.GetBlobClient(blobName);
+        
+        var metaData = new Dictionary<string, string> {["userEmail"] = email};
+        
         await using var data = file.OpenReadStream();
         await blobClient.UploadAsync(data);
+        await blobClient.SetMetadataAsync(metaData);
     }
 }

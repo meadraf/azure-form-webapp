@@ -1,5 +1,5 @@
 import {Component, Inject, OnInit} from '@angular/core';
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpParams} from "@angular/common/http";
 import {getBaseUrl} from "../../main";
 
 @Component({
@@ -24,8 +24,8 @@ export class FormComponent {
     const formData = new FormData();
     // @ts-ignore
     formData.append('file', this.file);
-    formData.append('email', this.email);
-    this.http.post( "https://localhost:7291/" + 'blob/upload', formData)
+    const params = new HttpParams().set('email', this.email);
+    this.http.post( "https://localhost:7291/" + 'blob/upload', formData, {params})
       .subscribe(response => {
         console.log(response);
       });

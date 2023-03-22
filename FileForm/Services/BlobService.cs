@@ -23,6 +23,14 @@ public class BlobService : IBlobService
         
         await using var data = file.OpenReadStream();
         await blobClient.UploadAsync(data);
-        await blobClient.SetMetadataAsync(metaData);
+
+        try
+        {
+            await blobClient.SetMetadataAsync(metaData);
+        }
+        catch(Exception) 
+        {
+            Console.WriteLine("Bad email value");
+        }
     }
 }
